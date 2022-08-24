@@ -2,7 +2,7 @@
     <div class="logo">
         <div>
             <img src="@/assets/vue.svg" alt="">
-            <span>后台管理系统</span>
+            <span class="tit">后台管理系统</span>
         </div>
         <el-icon @click="toggle" :size="20" class="collapse" v-if="isCollapse"><Expand/></el-icon>
         <el-icon @click="toggle" :size="20" class="collapse" v-else><Fold/></el-icon>
@@ -35,6 +35,10 @@
             -ms-user-select:none;/*IE10*/
             -khtml-user-select:none;/*早期浏览器*/
             user-select:none;
+        }
+        .tit {
+            font-weight: bold;
+            cursor: pointer;
         }
     }
 </style>

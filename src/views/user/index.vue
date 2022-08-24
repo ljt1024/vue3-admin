@@ -18,10 +18,13 @@
 
 <script lang="ts" setup>
     import { reactive } from 'vue'
+    import { getUserList } from '@/api/userManager'
     const searchForm = reactive<{
         username?:string
     }>({})
-
+    getUserList({}).then(res=> {
+        
+    })
     const tableData = [
         {
             date: '2016-05-03',

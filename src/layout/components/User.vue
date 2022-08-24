@@ -3,7 +3,7 @@
         <el-dropdown @command="handleSelect">
             <div class="userInfo">
                  <img src="@/assets/vue.svg" alt="">
-                 <span>张三</span>
+                 <span>{{user.username}}</span>
             </div>
             <template #dropdown>
                 <el-dropdown-menu>

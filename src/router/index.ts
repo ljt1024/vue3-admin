@@ -54,11 +54,11 @@ export const constantRoutes = [
             component: () => import('@/views/user/index.vue'),
         }]
     },
-    // {
-    //     path: '/404',
-    //     component: () => import('@/views/404.vue'),
-    //     hidden: true
-    // },
+    {
+        path: '/404',
+        component: () => import('@/views/404.vue'),
+        hidden: true
+    },
     //
     // {
     //     path: '/',
@@ -75,7 +75,7 @@ export const constantRoutes = [
     // /*删除了 *（星标或通配符）路由,现在必须使用自定义的 regex 参数来定义所有路由(*、/*)*/
     //
     // // 404 page must be placed at the end !!!
-    // { path: '/:pathMatch(.*)', redirect: '/404', hidden: true }
+    { path: '/:pathMatch(.*)', redirect: '/404', hidden: true }
 ]
 
 // const createRouters = () => createRouter({
