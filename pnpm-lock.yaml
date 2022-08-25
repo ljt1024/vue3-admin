@@ -7,6 +7,7 @@ specifiers:
   element-plus: ^2.2.13
   js-md5: ^0.7.3
   nprogress: ^0.2.0
+  path-to-regexp: ^6.2.1
   pinia: ^2.0.20
   sass: ^1.54.5
   typescript: ^4.6.4
@@ -21,6 +22,7 @@ dependencies:
   element-plus: 2.2.13_vue@3.2.37
   js-md5: 0.7.3
   nprogress: 0.2.0
+  path-to-regexp: 6.2.1
   pinia: 2.0.20_j6bzmzd4ujpabbp5objtwxyjp4
   vue: 3.2.37
   vue-router: 4.1.3_vue@3.2.37
@@ -747,6 +749,10 @@ packages:
   /path-parse/1.0.7:
     resolution: {integrity: sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw==}
     dev: true
+
+  /path-to-regexp/6.2.1:
+    resolution: {integrity: sha512-JLyh7xT1kizaEvcaXOQwOc2/Yhw6KZOvPf1S8401UyLk86CU79LN3vl7ztXGm/pZ+YjoyAJ4rxmHwbkBXJX+yw==}
+    dev: false
 
   /picocolors/1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}

@@ -10,5 +10,12 @@ export default defineConfig({
     alias: {
       '@/': `${srcPath}/`
     },
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: '@import "./src/styles/transition.scss";' // 添加公共样式
+      }
+    }
   }
 })

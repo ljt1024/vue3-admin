@@ -2,6 +2,7 @@
     <div class="header">
         <Logo :isCollapse="isCollapse" @getCollapse="(value)=> {isCollapse = value}"/>
         <User/>
+<!--        <Nav/>-->
     </div>
     <div class="content-wrap">
         <div class="aside">
@@ -31,7 +32,12 @@
             </el-menu>
         </div>
         <div class="container">
-            <router-view></router-view>
+
+            <router-view v-slot="{ Component }">
+                <transition name="fade-transform" mode="out-in">
+                    <component :is="Component"></component>
+                </transition>
+            </router-view>
         </div>
     </div>
 </template>
@@ -39,7 +45,8 @@
 <script lang="ts" setup>
     import Logo from './components/Logo.vue'
     import User from './components/User.vue'
-    import { useRouter } from 'vue-router'
+    import Nav from './components/Nav.vue'
+    import { useRouter, useRoute } from 'vue-router'
     import { ref } from 'vue'
     import {
         Document,
@@ -48,9 +55,11 @@
         Setting,
     } from '@element-plus/icons-vue'
     const router = useRouter()
+    const route = useRoute()
     const isCollapse = ref(false)
     let currentKey = ref('/')
     currentKey.value = router.currentRoute.value.fullPath
+    console.log(route,'=====')
     const handleSelect = (key: string, keyPath: string[]) => {
         currentKey.value = key
     }

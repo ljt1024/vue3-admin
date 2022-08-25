@@ -26,7 +26,10 @@
    import { reactive, ref } from 'vue'
    import md5 from 'js-md5'
    import type { FormInstance, FormRules } from 'element-plus'
-   import { useUserStore } from "@/store/user"
+   import { useUserStore } from '@/store/user'
+   import { ElNotification } from 'element-plus'
+   import { timeFix } from '@/utils/tools'
+
    const router = useRouter()
    const user = useUserStore()
    const form = reactive({
@@ -45,6 +48,13 @@
                const result = await user.loginUser({username:form.username, password: md5(form.password)})
                if(result && result.code === 200) {
                    router.push({name: 'home'})
+                   setTimeout(()=>{
+                       ElNotification({
+                           title: '欢迎',
+                           message: `${timeFix()}!尊敬的${form.username},欢迎您回来`,
+                           type: 'success',
+                       })
+                   },500)
                }
            }
        })

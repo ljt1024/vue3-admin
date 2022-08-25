@@ -6,13 +6,14 @@ interface T {
     data: {
         data?: object,
         code?: number,
-        msg?: string
+        msg?: string,
     }
 }
 declare module "axios" {
     interface AxiosResponse<T = any> {
         code?: number,
-        msg?: string
+        msg?: string,
+        total?: number|null
         // 这里追加你的参数
     }
     export function create(config?: AxiosRequestConfig): AxiosInstance;

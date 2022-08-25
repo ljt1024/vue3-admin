@@ -1,6 +1,8 @@
 <template>
-  {{counter.count}}
-   <button @click="add">+</button>
+    <div>
+        {{counter.count}}
+        <button @click="add">+</button>
+    </div>
 </template>
 
 <script lang="ts" setup>
