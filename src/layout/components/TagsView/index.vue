@@ -1,8 +1,8 @@
 <template>
   <div id="tags-view-container" class="tags-view-container">
-    <scroll-pane ref="scrollPane" class="tags-view-wrapper" @scroll="handleScroll">
+    <scroll-pane ref="scrollPane" class="tags-view-wrapper" @scroll="handleScroll" id="tag">
       <router-link
-        v-for="tag in visitedViews"
+        v-for="tag in view.visitedViews"
         ref="tag"
         :key="tag.path"
         :class="isActive(tag)?'active':''"
@@ -13,7 +13,7 @@
         @contextmenu.prevent.native="openMenu(tag,$event)"
       >
         {{ tag.title }}
-        <span v-if="!isAffix(tag) && visitedViews.length > 1" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
+        <el-icon v-if="!isAffix(tag) && view.visitedViews.length > 1" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" ><Close /></el-icon>
       </router-link>
     </scroll-pane>
     <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
@@ -26,11 +26,12 @@
 </template>
 
 <script setup lang="ts">
-import ScrollPane from './ScrollPane'
+import ScrollPane from './ScrollPane.vue'
 import path from 'path'
-import { ref, reactive, nextTick } from 'vue'
+import { ref, reactive, nextTick, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useViewStore } from '@/store/tagsView'
+import { constantRoutes } from '@/router'
 
 let visible = ref(false)
 let top_ = ref(0)
@@ -40,7 +41,7 @@ let affixTags_ = ref([])
 const view = useViewStore()
 const $route = useRoute()
 const $router = useRouter()
-const firstRoute = ref(null)
+const firstRoute = ref(undefined)
 const isActive = (route:any)=> {
   return route.path === $route.path
 }
@@ -48,14 +49,15 @@ const isActive = (route:any)=> {
 const scrollPane = ref<any>()
 const tag = ref<any>()
 const isAffix = (tag:any) => {
+  console.log(tag);
   return tag.meta && tag.meta.affix
 }
 
 const filterAffixTags = (routes:any, basePath = '/')=> {
   let tags:any = []
-  routes.forEach((route:any) => {
+  routes.map((route:any) => {
     if (route.meta && route.meta.affix) {
-      const tagPath = path.resolve(basePath, route.path)
+      const tagPath = route.path
       tags.push({
         fullPath: tagPath,
         path: tagPath,
@@ -70,11 +72,12 @@ const filterAffixTags = (routes:any, basePath = '/')=> {
       }
     }
   })
+  console.log({tags});
   return tags
 }
 
 const initTags = ()=> {
-  const affixTags:any = affixTags_.value = filterAffixTags($route)
+  const affixTags:any = affixTags_.value = filterAffixTags(constantRoutes)
   for (const tag of affixTags) {
     // Must have tag name
     if (tag.name) {
@@ -85,6 +88,7 @@ const initTags = ()=> {
 
 const addTags = ()=> {
   const { name } = $route
+  console.log(name);
   if (name) {
     view.addView($route)
   }
@@ -118,10 +122,10 @@ const refreshSelectedTag = (view:any)=> {
   })
 }
 
-const closeSelectedTag = (view:any) =>{
-  view.delView(view).then(({ visitedViews }) => {
-    if (isActive(view)) {
-      toLastView(visitedViews, view)
+const closeSelectedTag = (views:any) =>{
+  view.delView(views).then(({ visitedViews } : {visitedViews:any})=> {
+    if (isActive(views)) {
+      toLastView(visitedViews, views)
     }
   })
 }
@@ -134,7 +138,7 @@ const closeOthersTags = ()=> {
 }
 
 const closeAllTags = (view:any)=> {
-  view.delAllViews().then(({ visitedViews }) => {
+    view.delAllViews().then(({ visitedViews } : {visitedViews:any}) => {
     if (affixTags_.value.some((tag:any) => tag.path === view.path)) {
       return
     }
@@ -142,7 +146,7 @@ const closeAllTags = (view:any)=> {
   })
 }
 
-const toLastView = (visitedViews, view)=> {
+const toLastView = (visitedViews:any, view: any)=> {
   const latestView = visitedViews.slice(-1)[0]
   if (latestView) {
       $router.push(latestView.fullPath)
@@ -185,55 +189,25 @@ const closeMenu = ()=>{
 const handleScroll = () => {
   closeMenu()
 }
-
-export default {
-  components: { ScrollPane },
-  data() {
-    return {
-      visible: false,
-      top: 0,
-      left: 0,
-      selectedTag: {},
-      affixTags: []
-    }
-  },
-  computed: {
-    ...mapGetters(['firstRoute']),
-    visitedViews() {
-      return this.$store.state.tagsView.visitedViews
-    },
-    routes() {
-      return this.$store.state.permission.routes
-    }
-  },
-  watch: {
-    $route() {
-      this.addTags()
-      this.moveToCurrentTag()
-    },
-    visible(value) {
-      if (value) {
-        document.body.addEventListener('click', this.closeMenu)
-      } else {
-        document.body.removeEventListener('click', this.closeMenu)
-      }
-    }
-  },
-  mounted() {
-    this.initTags()
-    this.addTags()
-  },
-  methods: {
-
+watch($route,()=> {
+  addTags()
+  moveToCurrentTag()
+})
+watch(visible,(value)=> {
+  if (value) {
+    document.body.addEventListener('click', closeMenu)
+  } else {
+    document.body.removeEventListener('click', closeMenu)
   }
-}
+})
+initTags()
+addTags()
 </script>
 
 <style lang="scss" scoped>
 .tags-view-container {
   height: 46px;
   width: 100%;
-  margin-top: 44px;
   background: #fff;
   border-bottom: 1px solid #d8dce5;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
@@ -305,9 +279,9 @@ export default {
     .el-icon-close {
       width: 16px;
       height: 16px;
-      vertical-align: 2px;
       border-radius: 50%;
       text-align: center;
+      vertical-align: -2px;
       transition: all .3s cubic-bezier(.645, .045, .355, 1);
       transform-origin: 100% 50%;
       &:before {

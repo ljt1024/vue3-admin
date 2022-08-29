@@ -43,6 +43,7 @@ export const constantRoutes = [
             path: 'home',
             name: 'home',
             component: () => import('@/views/home/index.vue'),
+            meta: { title: '首页' },
         }]
     },
     {
@@ -52,6 +53,7 @@ export const constantRoutes = [
             path: '/userManager',
             name: 'userManager',
             component: () => import('@/views/user/index.vue'),
+            meta: { title: '用户管理' },
         }]
     },
     {

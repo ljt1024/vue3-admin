@@ -31,13 +31,15 @@
                 </el-menu-item>
             </el-menu>
         </div>
-        <div class="container">
-
-            <router-view v-slot="{ Component }">
-                <transition name="fade-transform" mode="out-in">
-                    <component :is="Component"></component>
-                </transition>
-            </router-view>
+        <div class="right-wrap">
+            <Tags/>
+            <div class="container">
+                <router-view v-slot="{ Component }">
+                    <transition name="fade-transform" mode="out-in">
+                        <component :is="Component"></component>
+                    </transition>
+                </router-view>
+            </div>
         </div>
     </div>
 </template>
@@ -46,6 +48,7 @@
     import Logo from './components/Logo.vue'
     import User from './components/User.vue'
     import Nav from './components/Nav.vue'
+    import Tags from './components/TagsView/index.vue'
     import { useRouter, useRoute } from 'vue-router'
     import { ref } from 'vue'
     import {
@@ -87,9 +90,12 @@
     .content-wrap {
         display: flex;
         height: calc(100vh - 61px);
-        .container {
-            padding: 15px;
+        .right-wrap {
             width: 100%;
+            .container {
+                padding: 15px;
+                width: 100%;
+            }
         }
     }
 </style>
