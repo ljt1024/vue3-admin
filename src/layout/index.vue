@@ -2,7 +2,6 @@
     <div class="header">
         <Logo :isCollapse="isCollapse" @getCollapse="(value)=> {isCollapse = value}"/>
         <User/>
-<!--        <Nav/>-->
     </div>
     <div class="content-wrap">
         <div class="aside">
@@ -13,25 +12,29 @@
                     @select="handleSelect"
                     :router="true"
             >
-                <el-menu-item index="/home">
+                <el-menu-item index="/home" >
                     <el-icon><icon-menu /></el-icon>
                     <template #title>首页</template>
                 </el-menu-item>
-                <el-menu-item index="/userManager" >
+                <el-menu-item index="/userManager">
                     <el-icon><icon-menu/></el-icon>
                     <template #title>用户管理</template>
                 </el-menu-item>
-                <el-menu-item index="3" >
+                <el-menu-item index="/adminManager">
+                    <el-icon><icon-menu/></el-icon>
+                    <template #title>管理员管理</template>
+                </el-menu-item>
+                <el-menu-item index="/articleManager">
                     <el-icon><document /></el-icon>
                     <template #title>文章管理</template>
                 </el-menu-item>
-                <el-menu-item index="4">
-                    <el-icon><setting /></el-icon>
-                    <template #title>栏目管理</template>
+                <el-menu-item index="/tagsManager">
+                    <el-icon><setting/></el-icon>
+                    <template #title>标签管理</template>
                 </el-menu-item>
             </el-menu>
         </div>
-        <div class="right-wrap">
+        <div class="right-wrap" :style="isCollapse ? 'width:calc(100% - 64px)' : 'width: calc(100% - 200px)'">
             <Tags/>
             <div class="container">
                 <router-view v-slot="{ Component }">
@@ -50,6 +53,7 @@
     import Nav from './components/Nav.vue'
     import Tags from './components/TagsView/index.vue'
     import { useRouter, useRoute } from 'vue-router'
+    import { constantRoutes } from '@/router'
     import { ref } from 'vue'
     import {
         Document,
@@ -62,7 +66,6 @@
     const isCollapse = ref(false)
     let currentKey = ref('/')
     currentKey.value = router.currentRoute.value.fullPath
-    console.log(route,'=====')
     const handleSelect = (key: string, keyPath: string[]) => {
         currentKey.value = key
     }
@@ -91,10 +94,8 @@
         display: flex;
         height: calc(100vh - 61px);
         .right-wrap {
-            width: 100%;
             .container {
                 padding: 15px;
-                width: 100%;
             }
         }
     }

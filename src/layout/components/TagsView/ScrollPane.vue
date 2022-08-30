@@ -16,7 +16,9 @@ const emit = defineEmits(['scroll'])
 const handleScroll = (e:any)=> {
   const eventDelta = e.wheelDelta || - e.deltaY * 40
   const $scrollWrapper = document.querySelector('.scroll-container')
-  $scrollWrapper.scrollLeft = $scrollWrapper.scrollLeft + eventDelta / 4
+  if($scrollWrapper) {
+    $scrollWrapper.scrollLeft = $scrollWrapper.scrollLeft + eventDelta / 4
+  }
 }
 
 const emitScroll = ()=> {
@@ -24,7 +26,9 @@ const emitScroll = ()=> {
 }
 onMounted(()=> {
   const scrollWrapper = document.querySelector('.scroll-container')
-  scrollWrapper.addEventListener('scroll',emitScroll, true)
+  if(scrollWrapper) {
+    scrollWrapper.addEventListener('scroll',emitScroll, true)
+  }
 })
 
 const moveToTarget = (currentTag:any) => {
@@ -42,11 +46,11 @@ const moveToTarget = (currentTag:any) => {
     lastTag = tagList[tagList.length - 1]
   }
 
-  if (firstTag === currentTag) {
+  if (firstTag === currentTag && $scrollWrapper) {
     $scrollWrapper.scrollLeft = 0
-  } else if (lastTag === currentTag) {
+  } else if (lastTag === currentTag && $scrollWrapper) {
     $scrollWrapper.scrollLeft = $scrollWrapper.scrollWidth - $containerWidth
-  } else if(Array.isArray(tagList)){
+  } else if(Array.isArray(tagList) &&  $scrollWrapper){
     // find preTag and nextTag
     const currentIndex = tagList.findIndex((item:any) => item === currentTag)
     const prevTag = tagList[currentIndex - 1]

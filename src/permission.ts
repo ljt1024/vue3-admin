@@ -16,7 +16,9 @@ router.beforeEach(async(to, from, next) => {
 
     // set page title
     // document.title = getPageTitle(to.meta.title)
-
+    if (typeof to.meta.title === "string") {
+        document.title = to.meta.title
+    }
     // determine whether the user has logged in
     const hasToken = localStorage.getItem('token')
 
@@ -34,7 +36,6 @@ router.beforeEach(async(to, from, next) => {
                 try {
                     // get user info
                     await user.getUser()
-                    console.log(111);
                     next()
                 } catch (error:any) {
                     console.log(error, '+++++++++++')

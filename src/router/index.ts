@@ -57,6 +57,36 @@ export const constantRoutes = [
         }]
     },
     {
+        path: '/adminManager',
+        component: Layout,
+        children: [{
+            path: '/adminManager',
+            name: 'adminManager',
+            component: () => import('@/views/admin/index.vue'),
+            meta: { title: '管理员管理' },
+        }]
+    },
+    {
+        path: '/articleManager',
+        component: Layout,
+        children: [{
+            path: '/articleManager',
+            name: 'articleManager',
+            component: () => import('@/views/article/index.vue'),
+            meta: { title: '文章管理' },
+        }]
+    },
+    {
+        path: '/tagsManager',
+        component: Layout,
+        children: [{
+            path: '/tagsManager',
+            name: 'tagsManager',
+            component: () => import('@/views/tags/index.vue'),
+            meta: { title: '标签管理' },
+        }]
+    },
+    {
         path: '/404',
         component: () => import('@/views/404.vue'),
         hidden: true

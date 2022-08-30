@@ -16,7 +16,7 @@
         <el-icon v-if="!isAffix(tag) && view.visitedViews.length > 1" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" ><Close /></el-icon>
       </router-link>
     </scroll-pane>
-    <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
+    <ul v-show="visible" :style="{left:left_+'px',top:top_+'px'}" class="contextmenu">
       <li @click="refreshSelectedTag(selectedTag)">刷新</li>
       <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">关闭</li>
       <li @click="closeOthersTags">关闭其它</li>
@@ -49,7 +49,6 @@ const isActive = (route:any)=> {
 const scrollPane = ref<any>()
 const tag = ref<any>()
 const isAffix = (tag:any) => {
-  console.log(tag);
   return tag.meta && tag.meta.affix
 }
 
@@ -72,7 +71,6 @@ const filterAffixTags = (routes:any, basePath = '/')=> {
       }
     }
   })
-  console.log({tags});
   return tags
 }
 
@@ -88,7 +86,6 @@ const initTags = ()=> {
 
 const addTags = ()=> {
   const { name } = $route
-  console.log(name);
   if (name) {
     view.addView($route)
   }
