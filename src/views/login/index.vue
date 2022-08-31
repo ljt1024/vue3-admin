@@ -5,15 +5,23 @@
         </div>
         <div class="loginForm">
             <div class="title">后台管理系统</div>
-            <el-form :model="form" label-width="80px" label-position="left" :rules="rules" ref="ruleFormRef">
-                <el-form-item label="用户名:" prop="username">
-                    <el-input v-model="form.username" />
+            <el-form :model="form"  label-position="left" :rules="rules" ref="ruleFormRef">
+                <el-form-item label="" prop="username">
+                    <el-input v-model="form.username" placeholder="用户名">
+                        <template #prefix>
+                            <el-icon :size="18"><User /></el-icon>
+                        </template>
+                    </el-input>
                 </el-form-item>
-                <el-form-item label="密码:" prop="password">
-                    <el-input v-model="form.password" type="password" />
+                <el-form-item label="" prop="password">
+                    <el-input v-model="form.password" type="password" show-password placeholder="密码">
+                        <template #prefix>
+                            <el-icon :size="18"><Lock /></el-icon>
+                        </template>
+                    </el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="success" @click="onSubmit(ruleFormRef)" class="loginBtn" icon="right">登录</el-button>
+                    <el-button type="primary" @click="onSubmit(ruleFormRef)" class="loginBtn" icon="right">登录</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -25,6 +33,7 @@
    import { useRouter } from 'vue-router'
    import { reactive, ref } from 'vue'
    import md5 from 'js-md5'
+   import { User, Lock } from '@element-plus/icons-vue'
    import type { FormInstance, FormRules } from 'element-plus'
    import { useUserStore } from '@/store/user'
    import { ElNotification } from 'element-plus'
@@ -84,20 +93,22 @@
         }
     }
     .loginForm {
-        width: 300px;
-        height: 240px;
+        width: 260px;
+        height: 300px;
         border: 1px solid #eee;
-        border-radius: 20px;
+        border-radius: 4px;
         position: absolute;
         padding: 40px;
         right: 0%;
         top: 50%;
         transform: translate(-50%, -50%);
         text-align: center;
+        background-color: #fff;
         .title {
-            color: #fff;
-            font-size: 24px;
-            margin-bottom: 20px;
+            color: #409eff;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 60px;
             text-align: center;
         }
         .el-form-item {

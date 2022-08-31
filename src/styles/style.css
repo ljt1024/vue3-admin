@@ -4,3 +4,8 @@ body {
   box-sizing: border-box;
   overflow-x: hidden;
 }
+
+a {
+  list-style-type: none;
+  text-decoration-line: none;
+}
