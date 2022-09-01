@@ -1,39 +1,10 @@
 <template>
     <div class="header">
-        <Logo :isCollapse="isCollapse" @getCollapse="(value)=> {isCollapse = value}"/>
+        <Logo @getCollapse="getCollapse"/>
         <User/>
     </div>
     <div class="content-wrap">
-        <div class="aside">
-            <el-menu
-                    :default-active="currentKey"
-                    class="el-menu-vertical-demo"
-                    :collapse="isCollapse"
-                    @select="handleSelect"
-                    :router="true"
-            >
-                <el-menu-item index="/home" >
-                    <el-icon><icon-menu /></el-icon>
-                    <template #title>首页</template>
-                </el-menu-item>
-                <el-menu-item index="/userManager">
-                    <el-icon><icon-menu/></el-icon>
-                    <template #title>用户管理</template>
-                </el-menu-item>
-                <el-menu-item index="/adminManager">
-                    <el-icon><icon-menu/></el-icon>
-                    <template #title>管理员管理</template>
-                </el-menu-item>
-                <el-menu-item index="/articleManager">
-                    <el-icon><document /></el-icon>
-                    <template #title>文章管理</template>
-                </el-menu-item>
-                <el-menu-item index="/tagsManager">
-                    <el-icon><setting/></el-icon>
-                    <template #title>标签管理</template>
-                </el-menu-item>
-            </el-menu>
-        </div>
+        <Sidebar/>
         <div class="right-wrap" :style="isCollapse ? 'width:calc(100% - 64px)' : 'width: calc(100% - 200px)'">
             <Tags/>
             <div class="container">
@@ -52,36 +23,19 @@
     import User from './components/User.vue'
     import Nav from './components/Nav.vue'
     import Tags from './components/TagsView/index.vue'
-    import { useRouter, useRoute } from 'vue-router'
-    import { constantRoutes } from '@/router'
+    import Sidebar from './components/Sidebar.vue'
+    import { useSetStore } from '@/store/set'
     import { ref } from 'vue'
-    import {
-        Document,
-        Menu as IconMenu,
-        Location,
-        Setting,
-    } from '@element-plus/icons-vue'
-    const router = useRouter()
-    const route = useRoute()
-    const isCollapse = ref(false)
-    let currentKey = ref('/')
-    currentKey.value = router.currentRoute.value.fullPath
-    const handleSelect = (key: string, keyPath: string[]) => {
-        currentKey.value = key
+    const set = useSetStore()
+    let isCollapse = ref(false)
+    isCollapse.value = set.isCollapse
+    const getCollapse = ()=> {
+        set.changeCollapse()
+        isCollapse.value = set.isCollapse
     }
-    const turn = () => {
-        router.push('/userManager')
-    }
-
 </script>
 
 <style lang="scss" scoped>
-    .el-menu-vertical-demo {
-        height: 100%;
-    }
-    .el-menu-vertical-demo:not(.el-menu--collapse) {
-        width: 200px;
-    }
     .header {
         border-bottom: 1px solid #eee;
         padding: 0px 16px 0px 10px;

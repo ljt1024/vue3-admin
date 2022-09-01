@@ -10,24 +10,24 @@
             </el-form-item>
         </el-form>
         <el-table
-                :data="tableData"
-                border
-                style="width: 100%"
-                table-layout="auto"
-                v-loading="tableLoading"
-                empty-text ='暂无数据'>
+            :data="tableData"
+            border
+            style="width: 100%"
+            table-layout="auto"
+            v-loading="tableLoading"
+            empty-text ='暂无数据'>
             <el-table-column prop="username" label="管理员名" />
             <el-table-column prop="avatar" label="管理员头像" />
             <el-table-column prop="creatDate" label="创建时间" />
         </el-table>
         <el-pagination
-                background
-                layout="prev, pager, next"
-                v-model:total = "total"
-                v-model:page-size = "pageSize"
-                v-model:currentPage = "currentPage"
-                @update:current-page ='handleCurrentChange'
-                class="pagination"/>
+            background
+            layout="prev, pager, next"
+            v-model:total = "total"
+            v-model:page-size = "pageSize"
+            v-model:currentPage = "currentPage"
+            @update:current-page ='handleCurrentChange'
+            class="pagination"/>
     </div>
 </template>
 
@@ -64,7 +64,6 @@
         getUser()
     }
     const handleCurrentChange = (val: number)=> {
-        console.log(val);
         searchForm.page = val
         getUser()
     }

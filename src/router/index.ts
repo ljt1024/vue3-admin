@@ -40,10 +40,10 @@ export const constantRoutes = [
         component: Layout,
         redirect: '/home',
         children: [{
-            path: 'home',
+            path: '/home',
             name: 'home',
             component: () => import('@/views/home/index.vue'),
-            meta: { title: '首页' },
+            meta: { title: '首页', icon: 'House' },
         }]
     },
     {
@@ -53,7 +53,7 @@ export const constantRoutes = [
             path: '/userManager',
             name: 'userManager',
             component: () => import('@/views/user/index.vue'),
-            meta: { title: '用户管理' },
+            meta: { title: '用户管理', icon: 'User' },
         }]
     },
     {
@@ -63,17 +63,17 @@ export const constantRoutes = [
             path: '/adminManager',
             name: 'adminManager',
             component: () => import('@/views/admin/index.vue'),
-            meta: { title: '管理员管理' },
+            meta: { title: '管理员管理', icon: 'User' },
         }]
     },
     {
-        path: '/articleManager',
+        path: '/roleManager',
         component: Layout,
         children: [{
-            path: '/articleManager',
-            name: 'articleManager',
-            component: () => import('@/views/article/index.vue'),
-            meta: { title: '文章管理' },
+            path: '/roleManager',
+            name: 'roleeManager',
+            component: () => import('@/views/role/index.vue'),
+            meta: { title: '文章管理', icon: 'Document' },
         }]
     },
     {
@@ -83,7 +83,17 @@ export const constantRoutes = [
             path: '/tagsManager',
             name: 'tagsManager',
             component: () => import('@/views/tags/index.vue'),
-            meta: { title: '标签管理' },
+            meta: { title: '标签管理', icon: 'PriceTag' },
+        }]
+    },
+    {
+        path: '/roleManager',
+        component: Layout,
+        children: [{
+            path: '/roleManager',
+            name: 'roleManager',
+            component: () => import('@/views/trole/index.vue'),
+            meta: { title: '角色管理', icon: 'User' },
         }]
     },
     {
@@ -91,21 +101,6 @@ export const constantRoutes = [
         component: () => import('@/views/404.vue'),
         hidden: true
     },
-    //
-    // {
-    //     path: '/',
-    //     component: Layout,
-    //     redirect: '/dashboard',
-    //     children: [{
-    //         path: 'dashboard',
-    //         name: 'Dashboard',
-    //         component: () => import('@/views/dashboard/index.vue'),
-    //         meta: { title: '首页', icon: 'dashboard' }
-    //     }]
-    // },
-    //
-    // /*删除了 *（星标或通配符）路由,现在必须使用自定义的 regex 参数来定义所有路由(*、/*)*/
-    //
     // // 404 page must be placed at the end !!!
     { path: '/:pathMatch(.*)', redirect: '/404', hidden: true }
 ]

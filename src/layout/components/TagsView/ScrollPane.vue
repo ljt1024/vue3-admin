@@ -85,13 +85,11 @@ defineExpose({
   position: relative;
   overflow: hidden;
   width: 100%;
-  ::v-deep {
-    .el-scrollbar__bar {
+  :deep(.el-scrollbar__bar) {
       bottom: 0;
-    }
-    .el-scrollbar__wrap {
+  }
+  :deep(.el-scrollbar__wrap) {
       height: 59px;
-    }
   }
 }
 </style>

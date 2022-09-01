@@ -114,12 +114,6 @@
         .el-form-item {
             margin-bottom: 30px;
         }
-        ::v-deep .el-input__wrapper {
-            padding: 4px 11px;
-        }
-        ::v-deep .el-form-item__label {
-            color: #fff;
-        }
         .loginBtn {
             width: 400px;
         }
